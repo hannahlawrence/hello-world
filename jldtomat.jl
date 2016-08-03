@@ -1,6 +1,27 @@
 using JLD
 using MAT
 
+function expectICD_to_mat(names,matfilename)
+  display("here0")
+  f=open(names)
+  display("here1")
+  matf=matopen(matfilename,"w")
+  display("here2")
+  for ln in eachline(f)
+    display("here3")
+    d=load(ln[1:length(ln)-1])
+    keys(d)
+    display("here4")
+    varname=ln[1:length(ln)-11];
+    varname=replace(varname,'-','_')
+    varname=varname*"ICD"
+    ICD=d["inter_chr_expect"];
+    write(matf,varname,ICD);
+  end
+  close(f)
+  close(matf)
+end
+    
 function expect_to_mat(names,matfilename)
   display("here0")
   f=open(names)
